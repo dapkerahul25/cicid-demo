@@ -1,0 +1,18 @@
+image: node:latest
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  tags: 
+      - nodeJS
+
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - npm install
+  script:
+    - bash deploy/updateAndRestart.sh
+    
+  only:
+    - master
